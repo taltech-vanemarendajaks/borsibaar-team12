@@ -4,8 +4,6 @@
 
 Börsibaar is a full-stack web application with a Spring Boot backend and Next.js frontend. It provides inventory management, transaction tracking, and price optimization features for stock bar themed events. There is also a public page for seeing drink prices in a format that is similar to the stock market.
 
-Link to website: [https://borsibaar.zapto.org](https://borsibaar.zapto.org)
-
 ## Architecture
 
 * **Backend**: Spring Boot 3.5.5 with Java 21, PostgreSQL database, Spring Security with OAuth2, JWT authentication
