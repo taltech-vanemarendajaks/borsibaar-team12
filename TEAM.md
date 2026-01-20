@@ -20,7 +20,7 @@ Team members:
 - Kätlin
 - Eleri
 - Mari
-  -Tiit
+- Tiit
 - Mihkel
 
 Team description
