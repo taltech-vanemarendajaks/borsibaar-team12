@@ -1,6 +1,5 @@
 Teamname Team-12
-
-Teammembers:
+Awesome team-members:
 - Katlin 
 - Eleri
 - Mari
