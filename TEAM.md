@@ -1,7 +1,11 @@
 Teamname Team-12
+
 Awesome team-members:
-- Katlin 
+
+Very Honorable and Awesome team-members:
+
 - Eleri
+- Katlin
 - Mari
 - Tiit
 - Mihkel
