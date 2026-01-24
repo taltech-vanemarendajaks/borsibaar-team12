@@ -1,8 +1,11 @@
 Teamname Team-12
-Very Awesome team-members:
 
-- Katlin 
+Awesome team-members:
+
+Very Honorable and Awesome team-members:
+
 - Eleri
+- Katlin
 - Mari
 - Tiit
 - Mihkel
@@ -12,3 +15,5 @@ We are a diverse group of individuals with a shared passion for technology and i
 Our team combines expertise in software development, design, and project management to deliver high-quality solutions. 
 We value collaboration, creativity, and continuous learning, striving to push the boundaries of what's possible in our projects.
 
+
+Tere Maailm!
