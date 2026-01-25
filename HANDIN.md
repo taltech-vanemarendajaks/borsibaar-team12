@@ -19,6 +19,7 @@
 - [PR 16] https://github.com/taltech-vanemarendajaks/borsibaar-team12/pull/16
 - [PR 17] https://github.com/taltech-vanemarendajaks/borsibaar-team12/pull/17
 - [PR 18] https://github.com/taltech-vanemarendajaks/borsibaar-team12/pull/18
+- [PR 19] https://github.com/taltech-vanemarendajaks/borsibaar-team12/pull/19
 
 ## What each team member worked on
 Each teammember worked on creating feature branches, making commits and pull requests.
