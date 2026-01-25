@@ -37,3 +37,4 @@ Our team combines expertise in software development, design, and project managem
 We value collaboration, creativity, and continuous learning, striving to push the boundaries of what's possible in our projects.
 
 Tere Maailm!
+Hello world!
