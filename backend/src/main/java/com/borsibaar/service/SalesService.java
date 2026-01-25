@@ -37,10 +37,16 @@ public class SalesService {
                 List<SaleItemResponseDto> saleItems = new ArrayList<>();
                 BigDecimal totalAmount = BigDecimal.ZERO;
 
+                BarStation station = barStationRepository
+                        .findByOrganizationIdAndId(organizationId, request.barStationId())
+                        .orElseThrow(() -> new ResponseStatusException(
+                                HttpStatus.FORBIDDEN,
+                                "Bar station does not belong to your organization"));
+
                 // Process each item in the sale
                 for (SaleItemRequestDto item : request.items()) {
                         SaleItemResponseDto saleItem = processSaleItem(item, userId, organizationId, saleId,
-                                        request.barStationId());
+                                        station.getId());
                         saleItems.add(saleItem);
                         totalAmount = totalAmount.add(saleItem.totalPrice());
                 }
