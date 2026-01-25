@@ -2,3 +2,6 @@
 
 - [PR 1] https://github.com/taltech-vanemarendajaks/borsibaar-team12/pull/11
 - [PR 2] .....................
+
+
+# Each teammember worked on creating feature branches, making commits and pull requests. 
