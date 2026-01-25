@@ -38,3 +38,18 @@ We value collaboration, creativity, and continuous learning, striving to push th
 
 Tere Maailm!
 Hello world!
+
+## Which merge strategies you used
+
+We used all three strategies:
+* regular merge
+* squash merge
+* rebase merge
+
+## Why we chose them
+
+We wanted to try them all for practice
+
+## What problems you encountered
+
+We had a lot of conflicts and mistakes by making pull requests to the wrong branches.
