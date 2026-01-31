@@ -45,7 +45,10 @@ export async function middleware(req: NextRequest) {
 
   // Protected routes: /dashboard, /onboarding, /pos
   if (!user) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    const loginUrl = new URL("/login", req.url);
+    // Add expired parameter if user was trying to access a protected route
+    loginUrl.searchParams.set("expired", "true");
+    return NextResponse.redirect(loginUrl);
   }
 
   if (
