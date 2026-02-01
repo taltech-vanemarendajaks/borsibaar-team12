@@ -1,10 +1,8 @@
 package com.borsibaar.service;
 
 import com.borsibaar.dto.*;
-import com.borsibaar.entity.Category;
-import com.borsibaar.entity.Inventory;
-import com.borsibaar.entity.InventoryTransaction;
-import com.borsibaar.entity.Product;
+import com.borsibaar.entity.*;
+import com.borsibaar.repository.BarStationRepository;
 import com.borsibaar.repository.InventoryRepository;
 import com.borsibaar.repository.InventoryTransactionRepository;
 import com.borsibaar.repository.ProductRepository;
@@ -28,6 +26,7 @@ public class SalesService {
         private final InventoryRepository inventoryRepository;
         private final InventoryTransactionRepository inventoryTransactionRepository;
         private final ProductRepository productRepository;
+        private final BarStationRepository barStationRepository;
 
         @Transactional
         public SaleResponseDto processSale(SaleRequestDto request, UUID userId, Long organizationId) {
