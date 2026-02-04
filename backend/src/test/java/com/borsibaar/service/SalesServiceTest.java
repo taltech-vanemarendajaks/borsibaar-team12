@@ -6,6 +6,8 @@ import com.borsibaar.dto.SaleResponseDto;
 import com.borsibaar.entity.Inventory;
 import com.borsibaar.entity.InventoryTransaction;
 import com.borsibaar.entity.Product;
+import com.borsibaar.entity.BarStation;
+import com.borsibaar.repository.BarStationRepository;
 import com.borsibaar.repository.InventoryRepository;
 import com.borsibaar.repository.InventoryTransactionRepository;
 import com.borsibaar.repository.ProductRepository;
@@ -32,6 +34,7 @@ class SalesServiceTest {
     @Mock private InventoryRepository inventoryRepository;
     @Mock private InventoryTransactionRepository inventoryTransactionRepository;
     @Mock private ProductRepository productRepository;
+    @Mock private BarStationRepository barStationRepository;
 
     @InjectMocks private SalesService salesService;
 
@@ -39,6 +42,11 @@ class SalesServiceTest {
 
     @Test
     void processSale_SingleItem_SuccessPriceIncreaseCapped() {
+        BarStation barStation = new BarStation();
+        barStation.setId(1L);
+        barStation.setOrganizationId(1L);
+        when(barStationRepository.findByOrganizationIdAndId(1L, 1L)).thenReturn(Optional.of(barStation));
+
         Product product = new Product(); product.setId(5L); product.setOrganizationId(1L); product.setActive(true); product.setBasePrice(BigDecimal.valueOf(10)); product.setMaxPrice(BigDecimal.valueOf(10)); product.setName("Beer");
         Inventory inventory = new Inventory(); inventory.setId(9L); inventory.setProduct(product); inventory.setProductId(5L); inventory.setOrganizationId(1L); inventory.setQuantity(BigDecimal.valueOf(20)); inventory.setAdjustedPrice(BigDecimal.valueOf(10)); inventory.setUpdatedAt(OffsetDateTime.now());
         product.setInventory(inventory);
@@ -58,46 +66,66 @@ class SalesServiceTest {
 
     @Test
     void processSale_InsufficientStock_Throws() {
+        BarStation barStation = new BarStation();
+        barStation.setId(1L);
+        barStation.setOrganizationId(1L);
+        when(barStationRepository.findByOrganizationIdAndId(1L, 1L)).thenReturn(Optional.of(barStation));
+
         Product product = new Product(); product.setId(5L); product.setOrganizationId(1L); product.setActive(true); product.setBasePrice(BigDecimal.ONE); product.setName("Beer");
         Inventory inventory = new Inventory(); inventory.setId(9L); inventory.setProduct(product); inventory.setProductId(5L); inventory.setOrganizationId(1L); inventory.setQuantity(BigDecimal.ONE); inventory.setAdjustedPrice(BigDecimal.ONE);
         product.setInventory(inventory);
         when(productRepository.findById(5L)).thenReturn(Optional.of(product));
         SaleItemRequestDto item = new SaleItemRequestDto(5L, BigDecimal.valueOf(5));
-        SaleRequestDto request = new SaleRequestDto(List.of(item), null, null);
+        SaleRequestDto request = new SaleRequestDto(List.of(item), null, 1L);
         ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> salesService.processSale(request, userId, 1L));
         assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
     }
 
     @Test
     void processSale_ProductInactive_Throws() {
+        BarStation barStation = new BarStation();
+        barStation.setId(1L);
+        barStation.setOrganizationId(1L);
+        when(barStationRepository.findByOrganizationIdAndId(1L, 1L)).thenReturn(Optional.of(barStation));
+
         Product product = new Product(); product.setId(5L); product.setOrganizationId(1L); product.setActive(false); product.setBasePrice(BigDecimal.ONE); product.setName("Beer");
         Inventory inventory = new Inventory(); inventory.setId(9L); inventory.setProduct(product); inventory.setProductId(5L); inventory.setOrganizationId(1L); inventory.setQuantity(BigDecimal.ONE); inventory.setAdjustedPrice(BigDecimal.ONE);
         product.setInventory(inventory);
         when(productRepository.findById(5L)).thenReturn(Optional.of(product));
         SaleItemRequestDto item = new SaleItemRequestDto(5L, BigDecimal.ONE);
-        SaleRequestDto request = new SaleRequestDto(List.of(item), null, null);
+        SaleRequestDto request = new SaleRequestDto(List.of(item), null, 1L);
         ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> salesService.processSale(request, userId, 1L));
         assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
     }
 
     @Test
     void processSale_ProductOrgMismatch_Throws() {
+        BarStation barStation = new BarStation();
+        barStation.setId(1L);
+        barStation.setOrganizationId(1L);
+        when(barStationRepository.findByOrganizationIdAndId(1L, 1L)).thenReturn(Optional.of(barStation));
+
         Product product = new Product(); product.setId(5L); product.setOrganizationId(2L); product.setActive(true); product.setBasePrice(BigDecimal.ONE); product.setName("Beer");
         Inventory inventory = new Inventory(); inventory.setId(9L); inventory.setProduct(product); inventory.setProductId(5L); inventory.setOrganizationId(2L); inventory.setQuantity(BigDecimal.ONE); inventory.setAdjustedPrice(BigDecimal.ONE);
         product.setInventory(inventory);
         when(productRepository.findById(5L)).thenReturn(Optional.of(product));
         SaleItemRequestDto item = new SaleItemRequestDto(5L, BigDecimal.ONE);
-        SaleRequestDto request = new SaleRequestDto(List.of(item), null, null);
+        SaleRequestDto request = new SaleRequestDto(List.of(item), null, 1L);
         ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> salesService.processSale(request, userId, 1L));
         assertEquals(HttpStatus.FORBIDDEN, ex.getStatusCode());
     }
 
     @Test
     void processSale_ProductInventoryMissing_Throws() {
+        BarStation barStation = new BarStation();
+        barStation.setId(1L);
+        barStation.setOrganizationId(1L);
+        when(barStationRepository.findByOrganizationIdAndId(1L, 1L)).thenReturn(Optional.of(barStation));
+
         Product product = new Product(); product.setId(5L); product.setOrganizationId(1L); product.setActive(true); product.setBasePrice(BigDecimal.ONE); product.setName("Beer");
         when(productRepository.findById(5L)).thenReturn(Optional.of(product));
         SaleItemRequestDto item = new SaleItemRequestDto(5L, BigDecimal.ONE);
-        SaleRequestDto request = new SaleRequestDto(List.of(item), null, null);
+        SaleRequestDto request = new SaleRequestDto(List.of(item), null, 1L);
         ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> salesService.processSale(request, userId, 1L));
         assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
     }
