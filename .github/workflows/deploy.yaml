@@ -44,6 +44,6 @@ jobs:
             sudo docker tag borsibaar-team12-backend:latest localhost:5000/borsibaar-team12-backend:latest &&
             sudo docker push localhost:5000/borsibaar-team12-frontend:latest &&
             sudo docker push localhost:5000/borsibaar-team12-backend:latest &&
-            sudo docker-compose pull &&
-            sudo docker-compose up -d
+            sudo docker compose pull &&
+            sudo docker compose up -d
           "
