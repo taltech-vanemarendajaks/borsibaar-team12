@@ -1,0 +1,33 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: |
+            193.40.157.29 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC2+oGpLlOQLYscfewDgKj9AF22fSNTkEB/blm44WXZ1X7xP/Hcc1PEN3qLpY1TitB6kN7GsKxJZ63rXvMZmRPVPpduVNNwlnhBRM/bHw2Xx+dlH3r+ReZjOCc0VaM5I3mf0D1yldGbgbpuzHcl6DATrcTZl7XS6fMhzxmJlBSwrplZtQcU4KPocniMWYHR+rU3GEkA2c5947k/hW0hr7dCu3PZDA7B9MYLEf1lek25vdFV8ZJgrAVIf9RQTcYILOTBJLrJo48h2WBXH4SrjEQYdnE0LCrTu3nFAf0usN8aOlNUWBz4tCVTOvymLgxEQKhLGC9AH/dqF2iD5d7Xf0byYfm2lcdwO/JZhkwVY2CCcIHumstF0hXpIg40yNTWFoKAtWHV89eYOirPZJ/eh185iF26x1DzooHEbj+KfmkFwaqx5duMTY6NqnklfNeh5NRyQwf3CRQM21orU6v/n6WxhD8rK1TMxIjRLVK4sVqZOmXkNs9eR952bsosJA4no98=
+
+
+      - name: Copy updated code to server
+        run: |
+          scp -o StrictHostKeyChecking=no -r . ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SSH_USER }}/app
+
+      - name: SSH and restart containers
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_USER }} "
+            cd /home/${{ secrets.SSH_USER }}/app &&
+            docker-compose down &&
+            docker-compose pull --build &&
+            docker-compose up -d
+          "
