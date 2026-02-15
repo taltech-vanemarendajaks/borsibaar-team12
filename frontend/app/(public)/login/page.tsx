@@ -7,7 +7,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center content-center gap-4">
-      <h1 className="text-2xl font-bold text-center">Login</h1>
+      <h1 className="text-2xl font-bold text-center">Login here</h1>
       <a href={`${publicBackendUrl}/oauth2/authorization/google`}>
         <button
           type="button"
