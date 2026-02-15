@@ -21,6 +21,7 @@ const items = [
     title: "Dashboard",
     url: "" + "/dashboard",
     icon: Home,
+    color: "text-green-600",
   },
   {
     title: "POS",
@@ -49,9 +50,11 @@ function SidebarContentItems() {
         <SidebarMenuItem key={item.title}>
           <SidebarMenuButton asChild size="lg" tooltip={item.title}>
             <a href={item.url} className="flex items-center">
-              <item.icon className="!w-6 !h-6" />
+              <item.icon className={`!w-6 !h-6 ${item.color ?? ""}`} />
               {!isCollapsed && (
-                <span className="text-lg font-medium">{item.title}</span>
+                <span className={`text-lg font-medium ${item.color ?? ""}`}>
+                  {item.title}
+                </span>
               )}
             </a>
           </SidebarMenuButton>
